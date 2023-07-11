@@ -118,39 +118,77 @@ class App extends Component {
       }
 
 
-      onButtonSubmit = () => {
-        this.setState({imageUrl: this.state.input});
-        fetch("https://smart-brain-backend-czd2.onrender.com/imageurl", {
-          method: 'post',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            input: this.state.input
-          })
+    //   onButtonSubmit = () => {
+    //     this.setState({imageUrl: this.state.input});
+    //     fetch("https://smart-brain-backend-czd2.onrender.com/imageurl", {
+    //       method: 'post',
+    //       headers: {'Content-Type': 'application/json'},
+    //       body: JSON.stringify({
+    //         input: this.state.input
+    //       })
+    //   })
+    //     .then(response => response.json())
+    //     // .then(result => console.log(result))
+    //     .then(res => {
+    //       if (res) {
+    //         fetch('https://smart-brain-backend-czd2.onrender.com/image', {
+    //             method: 'put',
+    //             headers: {'Content-Type': 'application/json'},
+    //             body: JSON.stringify({
+    //               id: this.state.user.id
+    //             })
+    //         })
+    //         .then(ress => ress.json())
+    //         .then(count => {
+    //           this.setState(Object.assign(this.state.user, {entries: count}))
+    //         })
+    //         .catch(console.log)
+    //       }
+        
+    //       this.displayFaceBox(this.calculateFaceLocation(res))
+    //     }
+    //     ).catch(error => console.log(error, "can not get data"));
+
+             
+    // }
+
+
+    onButtonSubmit = () => {
+      this.setState({ imageUrl: this.state.input });
+    
+      fetch("https://smart-brain-backend-czd2.onrender.com/imageurl", {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          input: this.state.input
+        })
       })
         .then(response => response.json())
-        .then(result => console.log(result))
         .then(res => {
           if (res) {
             fetch('https://smart-brain-backend-czd2.onrender.com/image', {
-                method: 'put',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                  id: this.state.user.id
-                })
+              method: 'put',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id: this.state.user.id
+              })
             })
-            .then(ress => ress.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, {entries: count}))
-            })
-            .catch(console.log)
+              .then(ress => ress.json())
+              .then(count => {
+                this.setState(Object.assign(this.state.user, { entries: count }));
+                this.displayFaceBox(this.calculateFaceLocation(res));
+              })
+              .catch(console.log);
+          } else {
+            console.log('Error: Unable to fetch data.');
           }
-        
-          this.displayFaceBox(this.calculateFaceLocation(res))
-        }
-        ).catch(error => console.log(error, "can not get data"));
-
-             
+        })
+        .catch(error => console.log(error, "Error: Unable to get data."));
     }
+
+    
+
+
 
       onRouteChange = (route) => {
         if (route === 'signout') {
