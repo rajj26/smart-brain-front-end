@@ -147,7 +147,7 @@ class App extends Component {
         
           this.displayFaceBox(this.calculateFaceLocation(res))
         }
-        ).catch(error => console.log(error));
+        ).catch(error => console.log(error, "can not get data"));
 
              
     }
