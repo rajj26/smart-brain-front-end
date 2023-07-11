@@ -164,6 +164,7 @@ class App extends Component {
         })
       })
         .then(response => response.json())
+        .then(result => console.log(result))
         .then(res => {
           if (res) {
             fetch('https://smart-brain-backend-czd2.onrender.com/image', {
