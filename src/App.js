@@ -42,12 +42,6 @@ import Rank from './components/Rank/Rank';
 import './App.css';
 
 
-// const app = new Clarifai.App({
-//  apiKey: '73ea6716270e4aac9610ec885082a40f'
-// }); 
-
-
-
 
 
 
@@ -84,11 +78,6 @@ class App extends Component {
       }
     
 
-      // componentDidMount() {
-      //   fetch('http://localhost:3000/')
-      //   .then(response => response.json())
-      //   .then(console.log)
-      // }
 
       calculateFaceLocation = (data) => {
         const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -128,9 +117,9 @@ class App extends Component {
           })
       })
         .then(response => response.json())
-        .then(result => console.log(result))
-        .then(res => {
-          if (res) {
+        .then(result => {
+          console.log(result);
+          if (result) {
             fetch('https://smart-brain-backend-czd2.onrender.com/image', {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
@@ -145,51 +134,15 @@ class App extends Component {
             .catch(console.log)
           }
         
-          this.displayFaceBox(this.calculateFaceLocation(res))
-        }
-        ).catch(error => console.log(error, "can not get data"));
+          this.displayFaceBox(this.calculateFaceLocation(result))
 
-             
+        })
+        .catch(error => console.log(error, "can not get data from API"));
+            
     }
 
 
-    // onButtonSubmit = () => {
-    //   this.setState({ imageUrl: this.state.input });
-    
-    //   fetch("https://smart-brain-backend-czd2.onrender.com/imageurl", {
-    //     method: 'post',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       input: this.state.input
-    //     })
-    //   })
-    //     .then(response => response.json())
-    //     .then(result => console.log(result))
-    //     .then(res => {
-    //       if (res) {
-    //         fetch('https://smart-brain-backend-czd2.onrender.com/image', {
-    //           method: 'put',
-    //           headers: { 'Content-Type': 'application/json' },
-    //           body: JSON.stringify({
-    //             id: this.state.user.id
-    //           })
-    //         })
-    //           .then(ress => ress.json())
-    //           .then(count => {
-    //             this.setState(Object.assign(this.state.user, { entries: count }));
-    //             this.displayFaceBox(this.calculateFaceLocation(res));
-    //           })
-    //           .catch(console.log);
-    //       } else {
-    //         console.log('Error: Unable to fetch data.');
-    //       }
-    //     })
-    //     .catch(error => console.log(error, "Error: Unable to get data."));
-    // }
-
-    
-
-
+   
 
       onRouteChange = (route) => {
         if (route === 'signout') {
